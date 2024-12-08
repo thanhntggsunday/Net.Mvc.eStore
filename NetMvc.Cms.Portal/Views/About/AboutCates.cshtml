@@ -1,0 +1,19 @@
+﻿
+@using NetMvc.Cms.Common.Dto
+@model NetMvc.Cms.Common.ViewModel.Common.ListViewModel<NetMvc.Cms.Common.Dto.AboutDto>
+@{
+
+    Layout = null;
+}
+
+<div class="sidebar-danhmuc-sp">
+<div class="widget-sidebar">
+    <h3 class="tile-sidebar-cate">Giới thiệu</h3>
+    <ul id="danhmucsanpham" class="menu">
+        @foreach (var item in Model.Data)
+        {
+            <li class="menu-item"><a href="/about/@item.MetaTitle-@item.ID">@item.Title</a></li>
+        }
+    </ul>
+</div>
+</div>

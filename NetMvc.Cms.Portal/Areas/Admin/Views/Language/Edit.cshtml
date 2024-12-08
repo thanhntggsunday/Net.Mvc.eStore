@@ -1,0 +1,84 @@
+﻿@model NetMvc.Cms.Common.ViewModel.Common.ApiResult<NetMvc.Cms.Common.Dto.LanguageDto>
+
+@{
+    ViewBag.Title = @Resources.CmsResource.AdminRoleTitlePage;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">@Resources.CmsResource.AdminLanguageCreateTitlePage</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @Resources.CmsResource.AdminNoteForm
+            </div>
+            <div class="panel-body">
+                @if (TempData["Notification"] != null)
+                {
+                    @Html.Hidden("NotificationAutoHide", TempData["NotificationAutoHide"])
+                    <div id="NotificationBox" class="@TempData["NotificationCSS"]" style="display: none">
+                        @TempData["Notification"]
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("Edit", "Language", FormMethod.Post, new { @role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(model => model.ResultObj.ID)
+                            @Html.HiddenFor(model => model.ResultObj.CreatedBy)
+                            @Html.HiddenFor(model => model.ResultObj.CreatedDate)
+                            <div class="form-group">
+                                <label>  @Html.LabelFor(model => model.ResultObj.Name)</label>
+
+                                @Html.TextBoxFor(model => model.ResultObj.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.Name)
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.Description)
+                                </label>
+
+                                @Html.TextBoxFor(model => model.ResultObj.Description, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.Description)
+                            </div>
+                             <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.IsDefault)
+                                </label>
+                                @Html.CheckBoxFor(model => model.ResultObj.IsDefault)
+                                @Html.ValidationMessageFor(model => model.ResultObj.IsDefault)
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.IsActived)
+                                </label>
+                                @Html.CheckBoxFor(model => model.ResultObj.IsActived)
+                                @Html.ValidationMessageFor(model => model.ResultObj.IsActived)
+                            </div>
+
+                            <button type="submit" class="btn btn-default">@Resources.CmsResource.AdminSaveButtonText</button>
+
+                            @Html.ActionLink(@Resources.CmsResource.GoBackToListText, "Index");
+                        }
+
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+</div>

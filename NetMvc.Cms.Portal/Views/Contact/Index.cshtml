@@ -1,0 +1,81 @@
+﻿@model NetMvc.Cms.Common.ViewModel.Common.ApiResult<NetMvc.Cms.Common.Dto.ContactDto>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    if (ViewBag.Message != null) {
+        window.alert(@ViewBag.Message);
+    }
+</script>
+
+<!------------------------------------------------------------------------------->
+<div id="contact-page" class="container">
+    <div class="bg">
+       
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="contact-form">
+                    @if (TempData["Notification"] != null)
+                    {
+                        @TempData["Notification"]
+                    }
+
+                    <h2 class="title text-center">Liên hệ</h2>
+                    <div class="status alert alert-success" style="display: none"></div>
+
+                    <div class="">
+
+                        @using (Html.BeginForm("Create", "Feedback", FormMethod.Post, new { @class = "contact-form row" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+
+                            <div class="form-group col-md-12">
+                                <input type="text" name="Name" class="form-control"  placeholder="Họ tên">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input type="text" name="Address" class="form-control"  placeholder="Địa chỉ">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input type="text" name="Phone" class="form-control"  placeholder="Điện thoại">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input type="text" name="Email" class="form-control" required="required" placeholder="Email *">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input type="text" name="Message" class="form-control" required="required" placeholder="Nội dung *">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Gửi liên hệ">
+                            </div>
+                          
+                            
+                        }
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-info">
+                    <h2 class="title text-center">Thông tin liên hệ</h2>
+                    <address>
+                        @Html.Raw(@Model.ResultObj.ContentHtml)
+                    </address>
+                    <div class="social-networks">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--/#contact-page-->

@@ -1,0 +1,137 @@
+﻿@model NetMvc.Cms.Common.ViewModel.Common.ApiResult<NetMvc.Cms.Common.Dto.ProductDto>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">@Resources.CmsResource.ProductCreate</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @Resources.CmsResource.AdminNoteForm
+            </div>
+            <div class="panel-body">
+                @if (TempData["Notification"] != null)
+                {
+                    @Html.Hidden("NotificationAutoHide", TempData["NotificationAutoHide"])
+                    <div id="NotificationBox" class="@TempData["NotificationCSS"]" style="display: none">
+                        @TempData["Notification"]
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-lg-10">
+
+                        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                          
+                             <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.Code)
+                                </label>
+                                @Html.TextBoxFor(model => model.ResultObj.Code, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.Code)
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.Title)
+                                </label>
+                                @Html.TextBoxFor(model => model.ResultObj.Title, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.Title)
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.Description)
+                                </label>
+                                @Html.TextAreaFor(model => model.ResultObj.Description, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.Description)
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.Price)
+                                </label>
+                                @Html.TextBoxFor(model => model.ResultObj.Price, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.Price)
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.Images)
+                                </label>
+                                @Html.TextBoxFor(model => model.ResultObj.Images, new { @class = "form-control", @id = "txtImgUrl" })
+                                <input type="button" id="btnSelectImg" class="btn btn-info" value="@Resources.CmsResource.AdminSelectImageButtonText" />
+                                @Html.ValidationMessageFor(model => model.ResultObj.Images)
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.CategoryID)
+                                </label>
+                                @Html.DropDownListFor(model => model.ResultObj.CategoryID, (SelectList)ViewBag.Category, @Resources.CmsResource.AdminEmptySelectionTextForFunction, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.CategoryID)
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Trạng thái
+                                </label>
+                                @Html.DropDownListFor(model => model.ResultObj.StrStatus,
+                                     new List<SelectListItem>()
+                                        {
+                                        new SelectListItem { Text = @Resources.CmsResource.AdminNewsPublishedStatusText, Value = "1",Selected=true },
+                                        new SelectListItem { Text = @Resources.CmsResource.AdminNewsUnPublishedStatusText,  Value = "0"},
+                                        }, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.StrStatus)
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.MetaKeywords)
+                                </label>
+
+                                @Html.TextBoxFor(model => model.ResultObj.MetaKeywords, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.MetaKeywords)
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.MetaDescription)
+                                </label>
+
+                                @Html.TextAreaFor(model => model.ResultObj.MetaDescription, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.MetaDescription)
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    @Html.LabelFor(model => model.ResultObj.Detail)
+                                </label>
+                                @Html.TextAreaFor(m => m.ResultObj.Detail, new { @class = "w100p", @id = "contenteditor", @style = "height:600px" })
+                                @Html.ValidationMessageFor(model => model.ResultObj.Detail)
+                            </div>
+
+                            <button type="submit" class="btn btn-default">@Resources.CmsResource.AdminSaveButtonText</button>
+
+                            @Html.ActionLink(@Resources.CmsResource.GoBackToListText, "Index");
+                        }
+
+                    </div>
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->

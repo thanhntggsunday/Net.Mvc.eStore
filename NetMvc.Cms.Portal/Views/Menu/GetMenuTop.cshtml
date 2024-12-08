@@ -1,0 +1,20 @@
+﻿@model NetMvc.Cms.Common.ViewModel.Common.ListViewModel<NetMvc.Cms.Common.Dto.MenuDto>
+@{
+
+    Layout = null;
+}
+
+<div class="full" id="menu">
+    <div class="full line"></div>
+    <div class="rwidth">
+        <ul id="menu-page-menu" class="group">
+            @foreach (var item in @Model.Data)
+            {
+                string currentItem = Request.Url.AbsoluteUri.Contains(item.Link) ? "current-menu-item" : string.Empty;
+                <li class="menu-item @currentItem"><a target="@item.Target" href="@item.Link">@item.Text</a></li>
+            }
+
+        </ul>
+    </div>
+    <div class="full line"></div>
+</div><!--end menu-->

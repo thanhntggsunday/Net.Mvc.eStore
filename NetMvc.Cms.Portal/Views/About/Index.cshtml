@@ -1,0 +1,56 @@
+﻿@using PagedList.Mvc
+@model NetMvc.Cms.Common.ViewModel.Common.PagedListViewModel<NetMvc.Cms.Common.Dto.AboutDto>
+
+@{
+    ViewBag.Title = "Giới thiệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="rwidth" id="bread">
+     
+    <span class="home-icon"></span><a title="Go to home." href="/" class="home">Trang chủ</a><span class="bread-icon"> > </span><span class="curr_bread">Giới thiệu</span>
+</div>
+<div id="content_new" class="rwidth">
+    <div id="content_product" class="product-cate rwidth">
+
+           @{Html.RenderAction("AboutCates", "About");}
+
+        <div id="right-cate-tin">
+            @*@if (Model.Transactional.Pager.TotalRows > 0)
+            {
+                <div class="list-new">
+                    @foreach (var item in Model.Data)
+                    {
+                        string link = "/about/" + item.MetaTitle + "-" + item.ID;
+
+                        <div class="widget_new bg_color 0">
+                            <div class="widget_new_content">
+                                <a class="thumb-new-cat" href="@link">
+                                    <img src="@item.Images" />
+                                </a>
+                                <div class="post">
+                                    <h3><a href="@link">@item.Title</a></h3>
+                                    <p>@item.Description</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+                if (Model.Transactional.Pager.TotalPages > 1)
+                {
+                    <div>
+                        Page @(Model.Data.PageCount < Model.Data.PageNumber ? 0 : Model.Data.PageNumber) of @Model.Data.PageCount
+
+                        @Html.PagedListPager(Model.Data, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    </div>
+                }
+            }
+            else
+            {
+                <center><h1>@Resources.ClientResource.EmptyDataText</h1></center>
+            }*@
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,144 @@
+﻿@using NetMvc.Cms.Common.Dto
+
+@model NetMvc.Cms.Portal.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var slideCount = 1;
+}
+
+@section slider
+{
+
+    <section id="slider">
+        <!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner">
+                            @foreach (var slide in Model.SlideDtos)
+                            {
+                                if (slideCount == 1)
+                                {
+                                    <div class="item active">
+                                        <div class="col-sm-6">
+                                            @*<h1><span>E</span>-SHOPPER</h1>*@
+                                            <h2>@slide.Name</h2>
+                                            <p>@slide.Description </p>
+                                            @*<button type="button" class="btn btn-default get">Get it now</button>*@
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img src="@slide.Images" class="girl img-responsive" alt="" height="300" width="400" />
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="item">
+                                        <div class="col-sm-6">
+                                            <h2>@slide.Name</h2>
+                                            <p>@slide.Description </p>
+                                            @*<button type="button" class="btn btn-default get">Get it now</button>*@
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img src="@slide.Images" class="girl img-responsive"  height="300" width="400" alt="" />
+
+                                        </div>
+                                    </div>
+                                }
+
+                                slideCount++;
+
+
+                            }
+
+                        </div>
+                       
+                        
+                        @*<ol class="carousel-indicators">
+                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#slider-carousel" data-slide-to="1"></li>
+                            <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        </ol>*@
+                        
+                     
+
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section><!--/slider-->
+
+}
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                @{Html.RenderAction("ProductCates", "Product");}
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">Sản phẩm mới</h2>
+                    
+                  
+                    @foreach (var item in (IEnumerable<ProductDto>)Model.TopProductDtos)
+                    {
+                        var link = "/product-detail/" + @item.MetaTitle + "-" + @item.ID;
+                       
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <a href="@link">
+                                            <img src="@item.Images" alt="" />
+                                        </a>
+                                        <br/>
+
+                                        <a href="@link">
+                                            <p>@item.Title</p>
+                                        </a>
+
+                                        @{
+                                            var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                                        }
+
+                                        <h5>Giá: @String.Format(info, "{0:c}", item.Price)</h5>
+
+                                        <a href="/ShoppingCart/AddToCart?id=@item.ID" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                    </div>
+                                    @*<div class="product-overlay">
+                                        <div class="overlay-content">
+                                            <h2><a href="@link">@item.Title</a></h2>
+                                            <div class="clear"></div>
+                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>*@
+                                </div>
+                                <div class="choose">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div><!--features_items-->
+
+
+            </div>
+        </div>
+    </div>
+</section>

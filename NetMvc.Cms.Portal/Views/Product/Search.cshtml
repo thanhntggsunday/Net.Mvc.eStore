@@ -1,0 +1,82 @@
+﻿@using PagedList.Mvc
+@model  NetMvc.Cms.Common.ViewModel.Common.PagedListViewModel<NetMvc.Cms.Common.Dto.ProductDto>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                @{Html.RenderAction("ProductCates", "Product");}
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">Kết quả tìm kiếm sản phẩm</h2>
+
+                    @if (Model.Data.Count() > 0)
+                    {
+                        <div id="sanpham">
+
+                            @for (int i = 0; i < Model.Data.Count(); i++)
+                            {
+                                var item = Model.Data.ElementAt(i);
+                                string splast = (i + 1) % 3 == 0 ? "splast" : string.Empty;
+                                string link = "/product-detail/" + @item.MetaTitle + "-" + @item.ID;
+
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <a href="@link">
+                                                    <img src="@item.Images" alt="" />
+                                                </a>
+                                                <br/>
+
+                                                <a href="@link">
+                                                    <p>@item.Title</p>
+                                                </a>
+
+                                                @{
+                                                    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                                                }
+
+                                                <h5>Giá: @String.Format(info, "{0:c}", item.Price)</h5>
+
+                                                <a href="/ShoppingCart/AddToCart?id=@item.ID" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                            </div>
+
+                                        </div>
+                                        <div class="choose">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div><!--end sanpham-->
+                        <div class="clearfix"></div>
+
+                        if (Model.Transactional.Pager.TotalPages > 1)
+                        {
+                            <div>
+                                <p>&nbsp;&nbsp; Trang @(Model.Data.PageCount < Model.Data.PageNumber ? 0 : Model.Data.PageNumber) / @Model.Data.PageCount</p>
+
+                                @Html.PagedListPager(Model.Data, page => Url.Action("Search", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <center><h1>@Resources.ClientResource.EmptyDataText</h1></center>
+                    }
+
+                </div><!--features_items-->
+            </div>
+        </div>
+    </div>
+</section>

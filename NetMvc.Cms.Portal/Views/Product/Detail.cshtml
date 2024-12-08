@@ -1,0 +1,91 @@
+﻿@model NetMvc.Cms.Portal.Models.ProductViewModel
+
+@{
+     ViewBag.Title = @Model.ProductDetail.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                @{Html.RenderAction("ProductCates", "Product");}
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">@Model.ProductDetail.Title</h2>
+
+                    <div class="product-details">
+                        <!--product-details-->
+                        <div class="col-sm-5">
+                            <div class="view-product">
+                                <img src="@Model.ProductDetail.Images" alt="" />
+                                
+                            </div>
+                            <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner">
+                                   
+                                </div>
+
+                                <!-- Controls -->
+                                <a class="left item-control" href="#similar-product" data-slide="prev">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                                <a class="right item-control" href="#similar-product" data-slide="next">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="product-information">
+                                <!--/product-information-->
+                                @*<img src="images/product-details/new.jpg" class="newarrival" alt="" />*@
+                                <h2>Mã sản phẩm: @Model.ProductDetail.Code</h2>
+                                <p>
+                                    Loại: @Model.ProductDetail.Category.Title
+                                </p>
+                                
+                                <p>
+                                    Mô tả: @Model.ProductDetail.Description
+                                </p>
+                                <span>
+                                    @{
+                                        var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                                    }
+
+                                    <span>Giá: @String.Format(info, "{0:c}", Model.ProductDetail.Price)</span>
+
+                                    @*<span>Giá: @Model.ProductDetail.Price VNĐ</span>*@
+                                    @*<label>Quantity:</label>*@
+                                    <input type="text" value=""/>
+                                    @*<button type="button" class="btn btn-fefault cart">
+            <i class="fa fa-shopping-cart"></i>
+            Add to cart
+        </button>*@
+                                    <a href="/ShoppingCart/AddToCart?id=@Model.ProductDetail.ID" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                </span>
+                               
+                            </div><!--/product-information-->
+                        </div>
+                    </div><!--/product-details-->
+                    
+                    <div class="product-details">
+                        <h3>Mô tả chi tiết sản phẩm</h3>
+                        <br/>
+                        <p>
+                           
+                            @Html.Raw(Model.ProductDetail.Detail)
+                        </p>
+                    </div>
+
+                </div><!--features_items-->
+            </div>
+        </div>
+    </div>
+</section>

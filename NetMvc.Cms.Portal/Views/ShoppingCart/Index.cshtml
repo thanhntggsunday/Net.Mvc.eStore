@@ -1,0 +1,102 @@
+﻿@model NetMvc.Cms.Portal.Models.ShoppingCartViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/Content/themes/client/css/Cart.css" rel="stylesheet" />*@
+
+@section Scripts{
+
+    <script src="~/Scripts/client/CartController.js"></script>
+}
+
+
+
+
+<section id="cart_items">
+    <div class="container">
+        <h3>
+            Giỏ hàng của bạn
+        </h3>
+
+
+        <div id="update-message">
+        </div>
+        <br />
+
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                <tr class="cart_menu">
+                    <td class="image">Sản phẩm</td>
+                    <td class="description"></td>
+                    <td class="price">Đơn giá</td>
+                    <td class="quantity">Số lượng</td>
+
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr id="row-@item.CartItemId">
+                        <td>
+                            <img src="@item.ProductImage" alt="No photo" width="40" height="45"/>
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.ProductName, "Detail", "Product", new {id = item.ProductId}, null)
+                        </td>
+
+                        <td>
+                            @item.Price
+                        </td>
+                        <td>
+                            @*@item.Count*@
+                            <input type="text" id="item-count-@item.CartItemId" value="@item.Count">
+                        </td>
+                        <td>
+                            <a href="#" class="RemoveLink" data-id="@item.CartItemId">
+                                Remove from
+                                cart
+                            </a>|
+                            <a href="#" class="UpdateLink" data-id="@item.CartItemId">
+                                Update
+                            </a>
+                        </td>
+                    </tr>
+                }
+
+                <tr>
+                    <td class="cart_description">
+                        <h4>
+                            <p></p><br/>
+                            <p>Tổng giá giỏ hàng: </p>
+                        </h4>
+                    </td>
+                    <td class="cart_price">
+                        <p></p><br/>
+                        <p id="cart-total">@Model.CartTotal</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+       
+        <div class="">
+            @Html.ActionLink("Đặt hàng >>", "AddressAndPayment", "Checkout", null, htmlAttributes: new { @class = "btn btn-default check_out" })
+        </div>
+        
+        <br/>
+        
+         
+        <div class="clearfix"></div>
+
+       
+    </div>
+    
+   
+</section> <!--/#cart_items-->
+

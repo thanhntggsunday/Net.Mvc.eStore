@@ -1,0 +1,22 @@
+﻿@model NetMvc.Cms.Common.ViewModel.Common.ListViewModel<NetMvc.Cms.Common.Dto.CategoryDto>
+@{
+    ViewBag.Title = "News category";
+    Layout = null;
+}
+
+<div class="left-sidebar">
+    <h2>Danh mục Blog</h2>
+    <div class="panel-group category-products" id="accordian">
+        <!--category-productsr-->
+
+        @foreach (var item in Model.Data)
+        {
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><a href="/News/@item.MetaTitle-@item.ID">@item.Title</a></h4>
+                </div>
+            </div>
+        }
+    </div><!--/category-products-->
+</div><!--/left-sidebar-->

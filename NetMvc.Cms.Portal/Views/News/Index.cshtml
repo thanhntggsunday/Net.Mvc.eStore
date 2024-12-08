@@ -1,0 +1,76 @@
+﻿@using PagedList.Mvc
+@model NetMvc.Cms.Common.ViewModel.Common.PagedListViewModel<NetMvc.Cms.Common.Dto.NewsDto>
+@{
+    ViewBag.Title = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                @{Html.RenderAction("NewsCates", "News");}
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="blog-post-area">
+                    <!--features_items-->
+                    <h2 class="title text-center">Bài viết blog mới nhất</h2>
+
+                    @if (Model.Data.Count() > 0)
+                    {
+                        <div id="sanpham">
+
+                            @for (int i = 0; i < Model.Data.Count(); i++)
+                            {
+                                var item = Model.Data.ElementAt(i);
+                                string link = "/news-detail/" + item.MetaTitle + "-" + item.ID;
+                              
+                                <div class="single-blog-post">
+                                    <h3>@item.Title</h3>
+                                    <div class="post-meta">
+                                        <ul>
+                                            <li><i class="fa fa-user"></i> @item.ModifiedBy</li>
+                                            <li><i class="fa fa-clock-o"></i> @item.ModifiedDate</li>
+                                            
+                                        </ul>
+                                        <span>
+                                            @*<i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-half-o"></i>*@
+                                        </span>
+                                    </div>
+                                    <a href="">
+                                        <img src="@item.Images" alt="" width="400" height="500">
+                                    </a>
+                                    <p>
+                                        @item.Description
+                                    </p>
+                                    <a  class="btn btn-primary" href="@link">Đọc thêm</a>
+                                </div>
+                            }
+
+                        </div><!--end sanpham-->
+                        <div class="clearfix"></div>
+
+                        if (Model.Transactional.Pager.TotalPages > 1)
+                        {
+                            <div>
+                                <p>&nbsp;&nbsp; Trang @(Model.Data.PageCount < Model.Data.PageNumber ? 0 : Model.Data.PageNumber) / @Model.Data.PageCount</p>
+
+                                @Html.PagedListPager(Model.Data, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <center><h1>@Resources.ClientResource.EmptyDataText</h1></center>
+                    }
+
+                </div><!--features_items-->
+            </div>
+        </div>
+    </div>
+</section>

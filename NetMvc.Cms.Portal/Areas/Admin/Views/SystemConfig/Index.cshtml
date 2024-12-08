@@ -1,0 +1,88 @@
+﻿@model NetMvc.Cms.Common.ViewModel.Common.ListViewModel<NetMvc.Cms.Common.Dto.SystemConfigDto>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            UniqueKey
+        </th>
+        <th>
+            Value
+        </th>
+        <th>
+            Unit
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            CreatedDate
+        </th>
+        <th>
+            CreatedBy
+        </th>
+        <th>
+            UpdatedDate
+        </th>
+        <th>
+            UpdatedBy
+        </th>
+        <th>
+            IsDeleted
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Data) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UniqueKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
