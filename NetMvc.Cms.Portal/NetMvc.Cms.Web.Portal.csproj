@@ -267,7 +267,6 @@
     <Compile Include="Areas\Admin\Models\FunctionViewModel.cs" />
     <Compile Include="Areas\Admin\Models\MenuViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductCategoryViewModel.cs" />
-    <Compile Include="Class\AppData.cs" />
     <Compile Include="Class\DecimalModelBinder.cs" />
     <Compile Include="Class\Utils.cs" />
     <Compile Include="Controllers\AboutController.cs" />

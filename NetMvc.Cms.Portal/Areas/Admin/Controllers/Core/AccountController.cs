@@ -78,9 +78,6 @@ namespace NetMvc.Cms.Portal.Areas.Admin.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //Customize:
-                    AppData.IsAdmin = NetMvc.Cms.Portal.Class.Utils.CheckUserIsAdmin(model.Email);
-
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -394,9 +391,6 @@ namespace NetMvc.Cms.Portal.Areas.Admin.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            //Customize:
-            AppData.IsAdmin = false;
-
             return RedirectToAction("Index", "Home");
         }
 
