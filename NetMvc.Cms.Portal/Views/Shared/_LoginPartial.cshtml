@@ -6,8 +6,7 @@
     {
         @Html.AntiForgeryToken()
 
-        bool isAdmin = false;
-        Boolean.TryParse(AppData.IsAdmin.ToString(), out isAdmin);
+        bool isAdmin = Utils.CheckUserIsAdmin(User.Identity.GetUserName());
 
         <ul class="nav navbar-nav">
             <li>
