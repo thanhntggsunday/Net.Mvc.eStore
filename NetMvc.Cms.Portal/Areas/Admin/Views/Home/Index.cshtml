@@ -2,11 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-   <!-- Page-Level Plugin Scripts - Dashboard -->
-<script src="~/Scripts/plugins/morris/raphael-2.1.0.min.js"></script>
-<script src="~/Scripts/plugins/morris/morris.js"></script>
-    <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-<script src="~/Scripts/admin/demo/dashboard-demo.js"></script>
+ 
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">@Resources.CmsResource.AdminHomePageTitleText</h1>
@@ -44,3 +40,12 @@
     <!-- /.col-lg-4 -->
 </div>
 <!-- /.row -->
+
+@section scripts
+{
+    <!-- Page-Level Plugin Scripts - Dashboard -->
+    @*<script src="~/Scripts/plugins/morris/raphael-2.1.0.min.js"></script>*@
+    @*<script src="~/Scripts/plugins/morris/morris.js"></script>*@
+    <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
+    @*<script src="~/Scripts/admin/demo/dashboard-demo.js"></script>*@
+}
