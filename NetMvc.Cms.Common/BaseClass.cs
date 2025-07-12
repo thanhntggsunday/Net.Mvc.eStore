@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using log4net;
 using Microsoft.Win32.SafeHandles;
 
 namespace NetMvc.Cms.Common
 {
     public class BaseClass : IDisposable
     {
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+
         // Flag: Has Dispose already been called?
         /// <summary>
         /// Defines the disposed.
@@ -33,7 +37,7 @@ namespace NetMvc.Cms.Common
             }
             catch (Exception ex)
             {
-                // Log4NetLogger.log.Error("Error Dispose: " + ex.Message);
+                logger.Error("Error Dispose: " + ex.Message);
             }
         }
 
