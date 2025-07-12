@@ -60,7 +60,6 @@
   <ItemGroup>
     <Compile Include="ConnectionStringBuilder.cs" />
     <Compile Include="DbModelBuilderExtension.cs" />
-    <Compile Include="EntityBase.cs" />
     <Compile Include="Migrations\202302110349275_InitModel.cs" />
     <Compile Include="Migrations\202302110349275_InitModel.Designer.cs">
       <DependentUpon>202302110349275_InitModel.cs</DependentUpon>
@@ -88,6 +87,10 @@
     <Compile Include="Migrations\202303040937371_ContactTblUpdated_2.cs" />
     <Compile Include="Migrations\202303040937371_ContactTblUpdated_2.Designer.cs">
       <DependentUpon>202303040937371_ContactTblUpdated_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507120247288_UpdateIdentityModel.cs" />
+    <Compile Include="Migrations\202507120247288_UpdateIdentityModel.Designer.cs">
+      <DependentUpon>202507120247288_UpdateIdentityModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NetMvcDbContext.cs" />
@@ -118,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202303040937371_ContactTblUpdated_2.resx">
       <DependentUpon>202303040937371_ContactTblUpdated_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507120247288_UpdateIdentityModel.resx">
+      <DependentUpon>202507120247288_UpdateIdentityModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
