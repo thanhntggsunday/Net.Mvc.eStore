@@ -1,3 +1,8 @@
+using System;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using NetMvc.Cms.Model.Entities;
+
 namespace NetMvc.Cms.DAL.Migrations
 {
     using System.Data.Entity.Migrations;
@@ -11,10 +16,46 @@ namespace NetMvc.Cms.DAL.Migrations
 
         protected override void Seed(NetMvc.Cms.DAL.NetMvcDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            var userManager = new UserManager<AppUser>(new UserStore<AppUser>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            var roles = new[] { "Admin", "Manage", "Employee" };
+
+            foreach (var role in roles)
+            {
+                if (!roleManager.RoleExists(role))
+                {
+                    roleManager.Create(new IdentityRole()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = role
+                    });
+                }
+            }
+
+            CreateUserIfNotExists(userManager, "Amin@gmail.com", "Admin@123", "Admin");
+            CreateUserIfNotExists(userManager, "Manager@gmail.com", "Manager@123", "Manage");
+            CreateUserIfNotExists(userManager, "Employee@gmail.com", "Employee@123", "Employee");
+        }
+
+        void CreateUserIfNotExists(UserManager<AppUser> userManager, string email, string password, string role)
+        {
+            if (userManager.FindByEmail(email) == null)
+            {
+                var user = new AppUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
+
+                var result = userManager.Create(user, password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(user.Id, role);
+                }
+            }
         }
     }
 }

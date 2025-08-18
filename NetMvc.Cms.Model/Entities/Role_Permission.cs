@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace NetMvc.Cms.Model.Entities
 {
@@ -8,12 +9,7 @@ namespace NetMvc.Cms.Model.Entities
 
         public int Function_ActionID { get; set; }
 
-        [Required]
-        [StringLength(128)]
+        [StringLength(32)]
         public string AppRoleId { get; set; }
-
-        public virtual AppRole AppRole { get; set; }
-
-        public virtual Function_Action Function_Action { get; set; }
     }
 }

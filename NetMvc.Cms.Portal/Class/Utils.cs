@@ -18,7 +18,7 @@ namespace NetMvc.Cms.Portal.Class
             {
                 var item = roles[i];
 
-                if (item == RoleConstants.ADMIN)
+                if (item.ToUpper() == RoleConstants.ADMIN)
                 {
                     return true;
                 }

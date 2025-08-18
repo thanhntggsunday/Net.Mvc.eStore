@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Mvc;
+using log4net;
 using NetMvc.Cms.BL.Interfaces;
 using NetMvc.Cms.Common.Dto;
 using NetMvc.Cms.Portal.Models;
@@ -11,6 +13,8 @@ namespace NetMvc.Cms.Portal.Controllers
     [Authorize]
     public class CheckoutController : Controller
     {
+        private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+
         // IOderBusinessService _oderBusinessService;
         /// <summary>
         /// Defines the PromoCode
@@ -88,6 +92,7 @@ namespace NetMvc.Cms.Portal.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Error(ex.ToString());
                 //Invalid - redisplay with errors
                 return View(orderViewModel);
             }

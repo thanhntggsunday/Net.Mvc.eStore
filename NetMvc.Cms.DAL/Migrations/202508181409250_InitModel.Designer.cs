@@ -7,13 +7,13 @@ namespace NetMvc.Cms.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdateModel_20230302 : IMigrationMetadata
+    public sealed partial class InitModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateModel_20230302));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202303021452397_UpdateModel_20230302"; }
+            get { return "202508181409250_InitModel"; }
         }
         
         string IMigrationMetadata.Source

@@ -16,7 +16,7 @@ namespace NetMvc.Cms.DAL
         public virtual DbSet<Role_Permission> Role_Permission { get; set; }
         public virtual DbSet<Function_Action> Function_Action { get; set; }
         public virtual DbSet<NetMvc.Cms.Model.Entities.Action> Actions { get; set; }
-        public virtual DbSet<AppRole> AppRoles { get; set; }
+      
         public DbSet<IdentityUserRole> UserRoles { set; get; }
 
         public virtual DbSet<About> Abouts { get; set; }
@@ -48,6 +48,8 @@ namespace NetMvc.Cms.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.CreateAspNetModel();
 
             modelBuilder.Entity<About>()

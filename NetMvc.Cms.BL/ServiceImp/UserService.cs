@@ -90,8 +90,7 @@ namespace NetMvc.Cms.BL.ServiceImp
 
             using (NetMvcDbContext context = new NetMvcDbContext())
             {
-                // var currentUserName = HttpContext.Current.User.Identity.Name;
-                var currentUser = context.Users.FirstOrDefault(x => x.Email == HttpContext.Current.User.Identity.Name);
+                var currentUser = context.Users.Include(u=>u.Roles).FirstOrDefault(x => x.Email == HttpContext.Current.User.Identity.Name);
 
                 if (currentUser != null)
                 {
@@ -100,7 +99,7 @@ namespace NetMvc.Cms.BL.ServiceImp
                         string roleName = "";
                         var role = context.Roles.FirstOrDefault(o => o.Id == r.RoleId);
                         roleName = role.Name;
-                        //thêm thông tin role of user vào danh sách
+                      
                         rolesOfCurrentUser.Add(roleName);
                     }
                 }
@@ -116,8 +115,7 @@ namespace NetMvc.Cms.BL.ServiceImp
 
             using (NetMvcDbContext context = new NetMvcDbContext())
             {
-                // var currentUserName = HttpContext.Current.User.Identity.Name;
-                var currentUser = context.Users.FirstOrDefault(x => x.Email == email);
+                var currentUser = context.Users.Include(u=>u.Roles).FirstOrDefault(x => x.Email == email);
 
                 if (currentUser != null)
                 {

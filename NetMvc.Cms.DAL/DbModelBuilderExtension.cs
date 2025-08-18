@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
+using NetMvc.Cms.Model.Entities;
 
 namespace NetMvc.Cms.DAL
 {
@@ -7,21 +8,11 @@ namespace NetMvc.Cms.DAL
     {
         public static void CreateAspNetModel(this DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<IdentityRole>()
-                .HasKey<string>(r => r.Id)
-                .ToTable("AppRoles");
-
-            modelBuilder.Entity<IdentityUserRole>()
-                .HasKey(i => new { i.UserId, i.RoleId })
-                .ToTable("AppUserRoles");
-
-            modelBuilder.Entity<IdentityUserLogin>()
-                .HasKey(i => new { i.LoginProvider, i.ProviderKey, i.UserId }) 
-                .ToTable("AppUserLogins");
-
-            modelBuilder.Entity<IdentityUserClaim>()
-                .HasKey(i => i.Id) 
-                .ToTable("AppUserClaims");
+            modelBuilder.Entity<AppUser>().ToTable("AppUsers");
+            modelBuilder.Entity<IdentityRole>().ToTable("AppRoles");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("AppUserRoles");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("AppUserLogins");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("AppUserClaims");
         }
 
     }

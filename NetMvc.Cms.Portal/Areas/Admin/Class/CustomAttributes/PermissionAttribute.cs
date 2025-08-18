@@ -29,16 +29,11 @@ namespace NetMvc.Cms.Portal.App_Code.CustomAttributes
             string[] privilegeLevels = GetUserRights();
             string[] arrAccessLevel = AccessLevel.Split(',');
 
-            for (int i = 0; i < arrAccessLevel.Length; i++)
-            {
-                arrAccessLevel[i] = arrAccessLevel[i].Trim();
-            }
-
             for (int i = 0; i < privilegeLevels.Length; i++)
             {
                 for (int j = 0; j < arrAccessLevel.Length; j++)
                 {
-                    if (privilegeLevels[i].Trim() == arrAccessLevel[j])
+                    if (privilegeLevels[i].Trim().ToLower() == arrAccessLevel[j].Trim().ToLower())
                     {
                         return true;
                     }

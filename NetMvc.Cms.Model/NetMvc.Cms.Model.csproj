@@ -61,11 +61,7 @@
     <Compile Include="Entities\About.cs" />
     <Compile Include="Entities\Action.cs" />
     <Compile Include="Entities\Album.cs" />
-    <Compile Include="Entities\AppRole.cs" />
     <Compile Include="Entities\AppUser.cs" />
-    <Compile Include="Entities\AppUserClaim.cs" />
-    <Compile Include="Entities\AppUserLogin.cs" />
-    <Compile Include="Entities\AppUserRole.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Contact.cs" />
     <Compile Include="Entities\Feedback.cs" />

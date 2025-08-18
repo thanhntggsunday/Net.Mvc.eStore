@@ -60,37 +60,9 @@
   <ItemGroup>
     <Compile Include="ConnectionStringBuilder.cs" />
     <Compile Include="DbModelBuilderExtension.cs" />
-    <Compile Include="Migrations\202302110349275_InitModel.cs" />
-    <Compile Include="Migrations\202302110349275_InitModel.Designer.cs">
-      <DependentUpon>202302110349275_InitModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302260739413_AddCart.cs" />
-    <Compile Include="Migrations\202302260739413_AddCart.Designer.cs">
-      <DependentUpon>202302260739413_AddCart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302260902355_UpdatePropertyTypeIntToLong.cs" />
-    <Compile Include="Migrations\202302260902355_UpdatePropertyTypeIntToLong.Designer.cs">
-      <DependentUpon>202302260902355_UpdatePropertyTypeIntToLong.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303011444547_RefactorModel.cs" />
-    <Compile Include="Migrations\202303011444547_RefactorModel.Designer.cs">
-      <DependentUpon>202303011444547_RefactorModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303021452397_UpdateModel_20230302.cs" />
-    <Compile Include="Migrations\202303021452397_UpdateModel_20230302.Designer.cs">
-      <DependentUpon>202303021452397_UpdateModel_20230302.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303040846392_ContactTblUpdated.cs" />
-    <Compile Include="Migrations\202303040846392_ContactTblUpdated.Designer.cs">
-      <DependentUpon>202303040846392_ContactTblUpdated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303040937371_ContactTblUpdated_2.cs" />
-    <Compile Include="Migrations\202303040937371_ContactTblUpdated_2.Designer.cs">
-      <DependentUpon>202303040937371_ContactTblUpdated_2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202507120247288_UpdateIdentityModel.cs" />
-    <Compile Include="Migrations\202507120247288_UpdateIdentityModel.Designer.cs">
-      <DependentUpon>202507120247288_UpdateIdentityModel.cs</DependentUpon>
+    <Compile Include="Migrations\202508181409250_InitModel.cs" />
+    <Compile Include="Migrations\202508181409250_InitModel.Designer.cs">
+      <DependentUpon>202508181409250_InitModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NetMvcDbContext.cs" />
@@ -101,32 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202302110349275_InitModel.resx">
-      <DependentUpon>202302110349275_InitModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302260739413_AddCart.resx">
-      <DependentUpon>202302260739413_AddCart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302260902355_UpdatePropertyTypeIntToLong.resx">
-      <DependentUpon>202302260902355_UpdatePropertyTypeIntToLong.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303011444547_RefactorModel.resx">
-      <DependentUpon>202303011444547_RefactorModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303021452397_UpdateModel_20230302.resx">
-      <DependentUpon>202303021452397_UpdateModel_20230302.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303040846392_ContactTblUpdated.resx">
-      <DependentUpon>202303040846392_ContactTblUpdated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303040937371_ContactTblUpdated_2.resx">
-      <DependentUpon>202303040937371_ContactTblUpdated_2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202507120247288_UpdateIdentityModel.resx">
-      <DependentUpon>202507120247288_UpdateIdentityModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202508181409250_InitModel.resx">
+      <DependentUpon>202508181409250_InitModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\NetMvc.Cms.Common\NetMvc.Cms.Common.csproj">
       <Project>{2E8EDA10-83C1-47D3-929A-F01AFC418E28}</Project>

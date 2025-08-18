@@ -1,5 +1,6 @@
 namespace NetMvc.Cms.DAL.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
     public partial class InitModel : DbMigration
@@ -18,11 +19,12 @@ namespace NetMvc.Cms.DAL.Migrations
                         Images = c.String(maxLength: 250),
                         MetaKeywords = c.String(maxLength: 250),
                         MetaDescription = c.String(maxLength: 250),
-                        Status = c.Int(nullable: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 10, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 10, unicode: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
                         LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
                 .PrimaryKey(t => t.ID);
@@ -38,7 +40,9 @@ namespace NetMvc.Cms.DAL.Migrations
                         CreatedBy = c.String(maxLength: 50),
                         ModifiedDate = c.DateTime(),
                         ModifiedBy = c.String(maxLength: 50),
-                        IsActive = c.String(),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -53,7 +57,9 @@ namespace NetMvc.Cms.DAL.Migrations
                         CreatedBy = c.String(maxLength: 50),
                         ModifiedDate = c.DateTime(),
                         ModifiedBy = c.String(maxLength: 50),
-                        IsActive = c.String(),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Action", t => t.ActionId, cascadeDelete: true)
@@ -76,10 +82,13 @@ namespace NetMvc.Cms.DAL.Migrations
                         IsLocked = c.Boolean(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
                         ParentID = c.String(maxLength: 50, unicode: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 20, unicode: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -89,44 +98,18 @@ namespace NetMvc.Cms.DAL.Migrations
                     {
                         ID = c.Int(nullable: false, identity: true),
                         Function_ActionID = c.Int(nullable: false),
-                        AppRoleId = c.String(nullable: false, maxLength: 128),
+                        AppRoleId = c.String(maxLength: 32),
                         CreatedDate = c.DateTime(),
                         CreatedBy = c.String(maxLength: 50),
                         ModifiedDate = c.DateTime(),
                         ModifiedBy = c.String(maxLength: 50),
-                        IsActive = c.String(),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AppRoles", t => t.AppRoleId, cascadeDelete: true)
                 .ForeignKey("dbo.Function_Action", t => t.Function_ActionID, cascadeDelete: true)
-                .Index(t => t.Function_ActionID)
-                .Index(t => t.AppRoleId);
-            
-            CreateTable(
-                "dbo.AppRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(),
-                        Description = c.String(),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.AppUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                        IdentityRole_Id = c.String(maxLength: 128),
-                        AppUser_Id = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AppRoles", t => t.IdentityRole_Id)
-                .ForeignKey("dbo.AppUsers", t => t.AppUser_Id)
-                .Index(t => t.IdentityRole_Id)
-                .Index(t => t.AppUser_Id);
+                .Index(t => t.Function_ActionID);
             
             CreateTable(
                 "dbo.Albums",
@@ -138,14 +121,36 @@ namespace NetMvc.Cms.DAL.Migrations
                         Images = c.String(maxLength: 250),
                         Description = c.String(maxLength: 250),
                         Order = c.Int(),
-                        CreatedDate = c.DateTime(),
-                        CreatedBy = c.String(maxLength: 20, unicode: false),
                         MetaKeywords = c.String(maxLength: 250),
                         MetaDescription = c.String(maxLength: 250),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
                         Status = c.Boolean(),
                         LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
                 .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.CartItems",
+                c => new
+                    {
+                        CartItemId = c.Int(nullable: false, identity: true),
+                        CartId = c.String(nullable: false),
+                        ProductId = c.Long(nullable: false),
+                        Count = c.Int(nullable: false),
+                        DateCreated = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
+                    })
+                .PrimaryKey(t => t.CartItemId);
             
             CreateTable(
                 "dbo.Categories",
@@ -158,15 +163,18 @@ namespace NetMvc.Cms.DAL.Migrations
                         Description = c.String(maxLength: 250),
                         Order = c.Int(),
                         ParentID = c.Long(),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
                         UpdatedDate = c.DateTime(),
                         UpdatedBy = c.String(maxLength: 20, unicode: false),
                         MetaKeywords = c.String(maxLength: 250),
                         MetaDescription = c.String(maxLength: 250),
-                        Status = c.Boolean(),
                         IsIntroduced = c.Boolean(),
-                        LanguageCode = c.String(nullable: false, maxLength: 10, unicode: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -174,13 +182,18 @@ namespace NetMvc.Cms.DAL.Migrations
                 "dbo.Contacts",
                 c => new
                     {
-                        ID = c.String(nullable: false, maxLength: 50, unicode: false),
-                        Title = c.String(nullable: false, maxLength: 250),
-                        Status = c.Boolean(nullable: false),
+                        ID = c.Int(nullable: false, identity: true),
+                        Title = c.String(maxLength: 250),
                         ContentHtml = c.String(storeType: "ntext"),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
                         LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
-                .PrimaryKey(t => new { t.ID, t.Title, t.Status });
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Feedbacks",
@@ -194,8 +207,14 @@ namespace NetMvc.Cms.DAL.Migrations
                         Email = c.String(nullable: false, maxLength: 50, unicode: false),
                         Title = c.String(nullable: false, maxLength: 100),
                         Message = c.String(nullable: false, maxLength: 500),
-                        CreatedDate = c.DateTime(nullable: false),
                         IsReaded = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -206,8 +225,13 @@ namespace NetMvc.Cms.DAL.Migrations
                         ID = c.String(nullable: false, maxLength: 50, unicode: false),
                         Title = c.String(nullable: false, maxLength: 250),
                         ContentHtml = c.String(storeType: "ntext"),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
                         LanguageCode = c.String(maxLength: 10, unicode: false),
-                        Status = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -218,12 +242,15 @@ namespace NetMvc.Cms.DAL.Migrations
                         ID = c.String(nullable: false, maxLength: 50, unicode: false),
                         Name = c.String(nullable: false, maxLength: 50),
                         Description = c.String(maxLength: 250),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 20, unicode: false),
                         IsActived = c.Boolean(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -234,13 +261,16 @@ namespace NetMvc.Cms.DAL.Migrations
                         ID = c.String(nullable: false, maxLength: 10, unicode: false),
                         Name = c.String(nullable: false, maxLength: 50),
                         Description = c.String(maxLength: 250),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 20, unicode: false),
                         IsActived = c.Boolean(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
                         IsDefault = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -260,11 +290,13 @@ namespace NetMvc.Cms.DAL.Migrations
                         IsDeleted = c.Boolean(nullable: false),
                         GroupID = c.String(nullable: false, maxLength: 50, unicode: false),
                         ParentID = c.String(maxLength: 50, unicode: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 20, unicode: false),
-                        Language = c.String(maxLength: 10, unicode: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -275,12 +307,17 @@ namespace NetMvc.Cms.DAL.Migrations
                         ID = c.String(nullable: false, maxLength: 50, unicode: false),
                         Name = c.String(nullable: false, maxLength: 50),
                         Description = c.String(maxLength: 250),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
                         UpdatedDate = c.DateTime(),
                         UpdatedBy = c.String(maxLength: 20, unicode: false),
                         IsActived = c.Boolean(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -296,11 +333,6 @@ namespace NetMvc.Cms.DAL.Migrations
                         Images = c.String(maxLength: 250),
                         MetaKeywords = c.String(maxLength: 250),
                         MetaDescription = c.String(maxLength: 250),
-                        Status = c.Int(nullable: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 10, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 10, unicode: false),
                         PublishedDate = c.DateTime(),
                         RelatedNewses = c.String(maxLength: 50, unicode: false),
                         CategoryID = c.Long(nullable: false),
@@ -308,6 +340,12 @@ namespace NetMvc.Cms.DAL.Migrations
                         Source = c.String(maxLength: 50),
                         UpTopNew = c.DateTime(),
                         UpTopHot = c.DateTime(),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
                         LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
                 .PrimaryKey(t => t.ID);
@@ -318,8 +356,55 @@ namespace NetMvc.Cms.DAL.Migrations
                     {
                         NewsID = c.Long(nullable: false),
                         TagID = c.String(nullable: false, maxLength: 50, unicode: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => new { t.NewsID, t.TagID });
+            
+            CreateTable(
+                "dbo.OrderDetails",
+                c => new
+                    {
+                        OrderID = c.Long(nullable: false),
+                        ProductID = c.Long(nullable: false),
+                        Quantitty = c.Long(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
+                    })
+                .PrimaryKey(t => new { t.OrderID, t.ProductID });
+            
+            CreateTable(
+                "dbo.Orders",
+                c => new
+                    {
+                        ID = c.Long(nullable: false, identity: true),
+                        CustomerName = c.String(nullable: false, maxLength: 256),
+                        CustomerAddress = c.String(nullable: false, maxLength: 256),
+                        CustomerEmail = c.String(nullable: false, maxLength: 256),
+                        CustomerMobile = c.String(nullable: false, maxLength: 50),
+                        CustomerMessage = c.String(nullable: false, maxLength: 256),
+                        PaymentMethod = c.String(maxLength: 256),
+                        PaymentStatus = c.String(),
+                        Total = c.Decimal(precision: 18, scale: 2),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
+                    })
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Permissions",
@@ -329,6 +414,13 @@ namespace NetMvc.Cms.DAL.Migrations
                         GroupID = c.String(nullable: false, maxLength: 20, unicode: false),
                         RoleID = c.String(nullable: false, maxLength: 50, unicode: false),
                         FunctionID = c.String(nullable: false, maxLength: 50, unicode: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -343,7 +435,11 @@ namespace NetMvc.Cms.DAL.Migrations
                         Description = c.String(maxLength: 250),
                         CreatedDate = c.DateTime(),
                         CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
                         Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -358,14 +454,15 @@ namespace NetMvc.Cms.DAL.Migrations
                         Description = c.String(maxLength: 250),
                         Order = c.Int(),
                         ParentID = c.Long(),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 20, unicode: false),
                         MetaKeywords = c.String(maxLength: 250),
                         MetaDescription = c.String(maxLength: 250),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
                         Status = c.Boolean(),
-                        LanguageCode = c.String(nullable: false, maxLength: 10, unicode: false),
+                        LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -382,20 +479,44 @@ namespace NetMvc.Cms.DAL.Migrations
                         Price = c.Decimal(precision: 18, scale: 0),
                         MetaKeywords = c.String(maxLength: 250),
                         MetaDescription = c.String(maxLength: 250),
-                        Status = c.Int(nullable: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 10, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 10, unicode: false),
                         CategoryID = c.Long(nullable: false),
                         ViewCount = c.Int(nullable: false),
                         Source = c.String(maxLength: 50),
                         UpTopNew = c.DateTime(),
                         UpTopHot = c.DateTime(),
                         Detail = c.String(storeType: "ntext"),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
                         LanguageCode = c.String(maxLength: 10, unicode: false),
                     })
                 .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.AppRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.AppUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AppRoles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.AppUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.Slides",
@@ -408,7 +529,13 @@ namespace NetMvc.Cms.DAL.Migrations
                         Images = c.String(nullable: false, maxLength: 250),
                         Order = c.Int(nullable: false),
                         GroupID = c.String(nullable: false, maxLength: 50, unicode: false),
-                        Status = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -422,11 +549,14 @@ namespace NetMvc.Cms.DAL.Migrations
                         Value = c.String(nullable: false, maxLength: 250),
                         Unit = c.String(nullable: false, maxLength: 50, unicode: false),
                         Description = c.String(maxLength: 50),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
-                        UpdatedDate = c.DateTime(nullable: false),
-                        UpdatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
                         IsDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -436,13 +566,16 @@ namespace NetMvc.Cms.DAL.Migrations
                     {
                         ID = c.String(nullable: false, maxLength: 50, unicode: false),
                         Title = c.String(nullable: false, maxLength: 50),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(nullable: false, maxLength: 20, unicode: false),
-                        UpdatedDate = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 20, unicode: false),
                         IsActived = c.Boolean(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
                         IsDefault = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50, unicode: false),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50, unicode: false),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -456,6 +589,13 @@ namespace NetMvc.Cms.DAL.Migrations
                         IPAddress = c.String(nullable: false, maxLength: 50, unicode: false),
                         SessionID = c.String(nullable: false, maxLength: 50, unicode: false),
                         UserName = c.String(nullable: false, maxLength: 20, unicode: false),
+                        CreatedDate = c.DateTime(),
+                        CreatedBy = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 50),
+                        StrStatus = c.String(),
+                        Status = c.Boolean(),
+                        LanguageCode = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -493,7 +633,7 @@ namespace NetMvc.Cms.DAL.Migrations
                         City = c.String(maxLength: 100),
                         Postcode = c.String(maxLength: 10),
                         FileContentType = c.String(maxLength: 50),
-                        Email = c.String(),
+                        Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
                         SecurityStamp = c.String(),
@@ -503,54 +643,53 @@ namespace NetMvc.Cms.DAL.Migrations
                         LockoutEndDateUtc = c.DateTime(),
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
-                        UserName = c.String(),
+                        UserName = c.String(nullable: false, maxLength: 256),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
                 "dbo.AppUserClaims",
                 c => new
                     {
+                        Id = c.Int(nullable: false, identity: true),
                         UserId = c.String(nullable: false, maxLength: 128),
-                        Id = c.Int(nullable: false),
                         ClaimType = c.String(),
                         ClaimValue = c.String(),
-                        AppUser_Id = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.AppUsers", t => t.AppUser_Id)
-                .Index(t => t.AppUser_Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AppUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.AppUserLogins",
                 c => new
                     {
+                        LoginProvider = c.String(nullable: false, maxLength: 128),
+                        ProviderKey = c.String(nullable: false, maxLength: 128),
                         UserId = c.String(nullable: false, maxLength: 128),
-                        LoginProvider = c.String(),
-                        ProviderKey = c.String(),
-                        AppUser_Id = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.AppUsers", t => t.AppUser_Id)
-                .Index(t => t.AppUser_Id);
+                .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
+                .ForeignKey("dbo.AppUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.AppUserRoles", "AppUser_Id", "dbo.AppUsers");
-            DropForeignKey("dbo.AppUserLogins", "AppUser_Id", "dbo.AppUsers");
-            DropForeignKey("dbo.AppUserClaims", "AppUser_Id", "dbo.AppUsers");
-            DropForeignKey("dbo.AppUserRoles", "IdentityRole_Id", "dbo.AppRoles");
+            DropForeignKey("dbo.AppUserRoles", "UserId", "dbo.AppUsers");
+            DropForeignKey("dbo.AppUserLogins", "UserId", "dbo.AppUsers");
+            DropForeignKey("dbo.AppUserClaims", "UserId", "dbo.AppUsers");
+            DropForeignKey("dbo.AppUserRoles", "RoleId", "dbo.AppRoles");
             DropForeignKey("dbo.Role_Permission", "Function_ActionID", "dbo.Function_Action");
-            DropForeignKey("dbo.Role_Permission", "AppRoleId", "dbo.AppRoles");
             DropForeignKey("dbo.Function_Action", "FunctionId", "dbo.Functions");
             DropForeignKey("dbo.Function_Action", "ActionId", "dbo.Action");
-            DropIndex("dbo.AppUserLogins", new[] { "AppUser_Id" });
-            DropIndex("dbo.AppUserClaims", new[] { "AppUser_Id" });
-            DropIndex("dbo.AppUserRoles", new[] { "AppUser_Id" });
-            DropIndex("dbo.AppUserRoles", new[] { "IdentityRole_Id" });
-            DropIndex("dbo.Role_Permission", new[] { "AppRoleId" });
+            DropIndex("dbo.AppUserLogins", new[] { "UserId" });
+            DropIndex("dbo.AppUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AppUsers", "UserNameIndex");
+            DropIndex("dbo.AppUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AppUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AppRoles", "RoleNameIndex");
             DropIndex("dbo.Role_Permission", new[] { "Function_ActionID" });
             DropIndex("dbo.Function_Action", new[] { "FunctionId" });
             DropIndex("dbo.Function_Action", new[] { "ActionId" });
@@ -562,10 +701,14 @@ namespace NetMvc.Cms.DAL.Migrations
             DropTable("dbo.Tags");
             DropTable("dbo.SystemConfigs");
             DropTable("dbo.Slides");
+            DropTable("dbo.AppUserRoles");
+            DropTable("dbo.AppRoles");
             DropTable("dbo.Products");
             DropTable("dbo.ProductCategories");
             DropTable("dbo.Photos");
             DropTable("dbo.Permissions");
+            DropTable("dbo.Orders");
+            DropTable("dbo.OrderDetails");
             DropTable("dbo.NewsTags");
             DropTable("dbo.Newses");
             DropTable("dbo.MenuTypes");
@@ -576,9 +719,8 @@ namespace NetMvc.Cms.DAL.Migrations
             DropTable("dbo.Feedbacks");
             DropTable("dbo.Contacts");
             DropTable("dbo.Categories");
+            DropTable("dbo.CartItems");
             DropTable("dbo.Albums");
-            DropTable("dbo.AppUserRoles");
-            DropTable("dbo.AppRoles");
             DropTable("dbo.Role_Permission");
             DropTable("dbo.Functions");
             DropTable("dbo.Function_Action");
