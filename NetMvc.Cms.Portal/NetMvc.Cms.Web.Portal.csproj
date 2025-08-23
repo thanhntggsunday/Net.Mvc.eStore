@@ -268,7 +268,7 @@
     <Compile Include="Areas\Admin\Models\MenuViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductCategoryViewModel.cs" />
     <Compile Include="Class\DecimalModelBinder.cs" />
-    <Compile Include="App_Code\Utils.cs" />
+    <Compile Include="Class\Utils.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
