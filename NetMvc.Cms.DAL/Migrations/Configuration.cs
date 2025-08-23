@@ -33,12 +33,12 @@ namespace NetMvc.Cms.DAL.Migrations
                 }
             }
 
-            CreateUserIfNotExists(userManager, "Amin@gmail.com", "Admin@123", "Admin");
-            CreateUserIfNotExists(userManager, "Manager@gmail.com", "Manager@123", "Manage");
-            CreateUserIfNotExists(userManager, "Employee@gmail.com", "Employee@123", "Employee");
+            CreateUser(userManager, "Amin@gmail.com", "Admin@123", "Admin");
+            CreateUser(userManager, "Manager@gmail.com", "Manager@123", "Manage");
+            CreateUser(userManager, "Employee@gmail.com", "Employee@123", "Employee");
         }
 
-        void CreateUserIfNotExists(UserManager<AppUser> userManager, string email, string password, string role)
+        void CreateUser(UserManager<AppUser> userManager, string email, string password, string role)
         {
             if (userManager.FindByEmail(email) == null)
             {
