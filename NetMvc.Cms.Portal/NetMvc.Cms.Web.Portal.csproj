@@ -233,8 +233,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Class\CustomAttributes\NesHandleErrorAttribute.cs" />
-    <Compile Include="Areas\Admin\Class\CustomAttributes\PermissionAttribute.cs" />
+    <Compile Include="App_Code\CustomAttributes\NesHandleErrorAttribute.cs" />
+    <Compile Include="App_Code\CustomAttributes\PermissionAttribute.cs" />
     <Compile Include="Areas\Admin\Class\MenuConstants.cs" />
     <Compile Include="Areas\Admin\Controllers\Cms\AboutController.cs" />
     <Compile Include="Areas\Admin\Controllers\Cms\AlbumController.cs" />
@@ -268,7 +268,7 @@
     <Compile Include="Areas\Admin\Models\MenuViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductCategoryViewModel.cs" />
     <Compile Include="Class\DecimalModelBinder.cs" />
-    <Compile Include="Class\Utils.cs" />
+    <Compile Include="App_Code\Utils.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
@@ -1451,7 +1451,6 @@
     <Content Include="Views\Shared\_OrderLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Areas\Admin\Views\UserGroup\" />
