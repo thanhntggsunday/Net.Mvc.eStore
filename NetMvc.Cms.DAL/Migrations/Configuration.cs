@@ -33,7 +33,7 @@ namespace NetMvc.Cms.DAL.Migrations
                 }
             }
 
-            CreateUser(userManager, "Amin@gmail.com", "Admin@123", "Admin");
+            CreateUser(userManager, "Admin@gmail.com", "Admin@123", "Admin");
             CreateUser(userManager, "Manager@gmail.com", "Manager@123", "Manage");
             CreateUser(userManager, "Employee@gmail.com", "Employee@123", "Employee");
         }
